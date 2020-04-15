@@ -10,4 +10,10 @@ class Post extends Model
         'user_id','title','body'
     ];
 
+    /*
+     * Todo:Define an inverse One-to-one or One-to-many relationship.
+     */
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

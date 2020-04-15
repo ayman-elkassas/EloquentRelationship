@@ -43,13 +43,12 @@ Route::get('/create_profile',function (){
 //    ]);
 
     //TODO:GOLD WAY
-    $user=\App\User::find(4);
+    $user=\App\User::find(1);
 
     $data=[
         'phone'=>'0000111111',
         'address'=>'jl. Ray.damietta'
     ];
-
 
     $user->profile()->create($data);
 
@@ -148,3 +147,56 @@ Route::get('create_post',function (){
 
     return 'Success';
 });
+
+Route::get('read_posts',function(){
+
+    $user=\App\User::find(1);
+
+    //get all posts....
+    $posts=$user->posts()->get();
+
+    foreach ($posts as $post){
+        $data[]=[
+            'name'=>$post->user->name,
+            'user_created_id'=>$post->user->id,
+            'post_id'=>$post->id,
+            'title'=>$post->title,
+            'body'=>$post->body
+        ];
+    }
+
+    //get first post only.....
+//    $post=$user->posts()->first();
+//    $data=[
+//        'name'=>$post->user->name,
+//        'title'=>$post->title,
+//        'body'=>$post->body
+//    ];
+
+    return $data;
+});
+
+Route::get('update_post',function (){
+    $user=\App\User::findOrFail(1);
+
+//    Method.1
+//    $user->posts()->whereId(1)->update([
+//       'title'=>'POST TITLE',
+//        'body'=>'POST BODY'
+//    ]);
+
+    // Method.2
+//    $user->posts()->where('id',1)->update([
+//        'title'=>'POST TITLE NEW',
+//        'body'=>'POST BODY NEW'
+//    ]);
+
+    // Method.3 Update All
+    $user->posts()->update([
+        'title'=>'POST TITLE NEW 2',
+        'body'=>'POST BODY NEW 2'
+    ]);
+    return 'Success';
+});
+
+
