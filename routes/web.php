@@ -199,4 +199,23 @@ Route::get('update_post',function (){
     return 'Success';
 });
 
+Route::get('delete_post',function (){
+    $user=\App\User::findOrFail(1);
+
+//    Method.1
+//    $user->posts()->whereId(1)->delete();
+
+    // Method.2
+    //select with foreign key uder_id in posts table....
+//    $user->posts()->whereUserId(1)->delete();
+
+    //Method 3
+    $user->posts()->where('id',1)->delete();
+
+    //Method 4 Delete All
+//    $user->posts()->delete();
+
+    return 'success';
+});
+
 
