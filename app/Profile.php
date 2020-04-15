@@ -15,7 +15,7 @@ class Profile extends Model
     /*
      * Todo:Define an inverse One-to-one or One-to-many relationship.
      */
-    public function user(){
+    public function user():object{
         return $this->belongsTo(User::class);
     }
 }

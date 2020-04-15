@@ -13,7 +13,11 @@ class Post extends Model
     /*
      * Todo:Define an inverse One-to-one or One-to-many relationship.
      */
-    public function user(){
+    public function user():object{
         return $this->belongsTo(User::class);
+    }
+
+    public function categories():object{
+        return $this->belongsToMany(Category::class);
     }
 }
