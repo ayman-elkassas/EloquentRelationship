@@ -135,7 +135,7 @@ Route::get('delete_profile',function (){
     return $user;
 });
 
-//TODO:1-ONE-TO-MANY
+//TODO:2-ONE-TO-MANY
 Route::get('create_post',function (){
 
     $user=\App\User::findOrFail(1);
@@ -217,5 +217,62 @@ Route::get('delete_post',function (){
 
     return 'success';
 });
+
+//TODO:3-MANY-TO-MANY
+
+//Note Migration category_post insert by default when make your relation as following
+Route::get('create_category',function (){
+    $post=\App\Post::findOrFail(2);
+
+    $post->categories()->create([
+        'slug'=>str_slug('Laravel News','_'),
+        'category'=>'News'
+    ]);
+
+    return 'Success';
+});
+
+Route::get('read_category',function(){
+    $post=\App\Post::find(2);
+
+    $categories_Of_Post=$post->categories;
+    foreach ($categories_Of_Post as $category){
+        echo $category->slug .'<br>';
+    }
+});
+
+//Read All posts that under category
+Route::get('read_post_of_category',function (){
+    $category=\App\Category::find(1);
+
+    //get all posts that contain under this category
+    $posts=$category->posts;
+    foreach ($posts as $post){
+        echo $post->title . '<br>';
+    }
+
+});
+
+//Attach post under category or more
+Route::get('/attach',function (){
+
+    //like same if you want to add post with id=2 under category with id=1
+    $post=\App\Post::find(2);
+    //attach post with id=2 under category 1,3
+    $post->categories()->attach([1,3]);
+
+    return 'Success';
+
+});
+
+//Detach post from category
+Route::get('detach',function (){
+
+    $post=\App\Post::find(2);
+    $post->categories()->detach([1,3]);
+
+    return 'Success';
+});
+
 
 
