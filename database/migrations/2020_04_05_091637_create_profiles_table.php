@@ -14,10 +14,10 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->nullable(false);
 
             //Todo:as a foreign key
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable(false);
             $table->string('phone');
             $table->text('address');
 

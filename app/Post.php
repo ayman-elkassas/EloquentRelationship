@@ -20,4 +20,8 @@ class Post extends Model
     public function categories():object{
         return $this->belongsToMany(Category::class);
     }
+
+    public function comments():object {
+        return $this->morphMany(comments::class,'commentable');
+    }
 }

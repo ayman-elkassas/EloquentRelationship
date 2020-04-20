@@ -138,10 +138,10 @@ Route::get('delete_profile',function (){
 //TODO:2-ONE-TO-MANY
 Route::get('create_post',function (){
 
-    $user=\App\User::findOrFail(1);
+    $user=\App\User::findOrFail(3);
     $data=[
-        'title'=>'ISi Title Post',
-        'body'=>'Hello world! Ini isi....'
+        'title'=>'ISi Title Post Admin 1',
+        'body'=>'Hello world! Ini isi Admin 1....'
     ];
     $user->posts()->create($data);
 
@@ -273,6 +273,46 @@ Route::get('detach',function (){
 
     return 'Success';
 });
+
+//Sync attach and detach otherwise (if post attach under category (1,2,3) and then sync with
+// (1,2) then result attach with 1,2 and detach 3)
+Route::get('sync',function (){
+    $post=\App\Post::find(2);
+    $post->categories()->sync([1,3]);
+
+    return 'Success';
+});
+
+//How to get All posts that all accounts as admin share it
+//Without direct relationship between Role and Post table through users table
+Route::get('role/posts',function (){
+
+    $role=\App\Role::find(1);
+    $posts= $role->posts;
+
+    return $posts;
+});
+
+Route::get('comment/create',function (){
+    $post=\App\Post::find(2);
+//    $portfolio=\App\portfolio::find(1);
+
+    //comment that can use to comment on post or portfolio post, ok? yes
+    //Using polymorphic relation can do this can insert comment and can detect automatic ?
+    //id with comment under it (post or portfolio)
+    //and what type of class (here:post or portfolio)
+
+    $post->comments()->create([
+       'user_id'=>1,
+        'content'=>'Woooo glgl video amazing one'
+    ]);
+
+    return 'Success';
+});
+
+
+
+
 
 
 
