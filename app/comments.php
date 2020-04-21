@@ -15,6 +15,7 @@ class comments extends Model
         return $this->belongsTo(User::class);
     }
 
+    //to get model object that comment under it....(post or portfolio as ex)
     public function commentable(){
         return $this->morphTo();
     }

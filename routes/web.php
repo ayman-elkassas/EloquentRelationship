@@ -293,6 +293,7 @@ Route::get('role/posts',function (){
     return $posts;
 });
 
+//Create new comment
 Route::get('comment/create',function (){
     $post=\App\Post::find(2);
 //    $portfolio=\App\portfolio::find(1);
@@ -310,8 +311,38 @@ Route::get('comment/create',function (){
     return 'Success';
 });
 
+//Read comment
+Route::get('comment/read',function (){
+    $post=\App\Post::findOrFail(1);
+    $comments=$post->comments;
 
+    foreach ($comments as $comment){
+        echo $comment->user->name . '-' .$comment->content.
+            ' ('.$comment->commentable->title.') '.'<br>';
+    }
+});
 
+//Update comment
+Route::get('comment/update',function (){
+    $post=\App\Post::find(1);
+    $comment=$post->comments()->where('id',5)->first();
+    $comment->update([
+       'content'=>'updated comment'
+    ]);
+
+    return 'Success';
+
+});
+
+//Delete comment
+Route::get('comment/delete',function (){
+    $post=\App\Post::find(1);
+    $comment=$post->comments()->where('id',5)->first();
+    $comment->delete();
+
+    return 'Success';
+
+});
 
 
 

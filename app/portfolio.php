@@ -11,6 +11,9 @@ class portfolio extends Model
         'user_id','title','body'
     ];
 
+    //Polymorphic Concept:
+    //To Enable one relation for purpose that may used in different relation
+    //Such as comments and tags (may comment under post portfolio and same tags person)
     public function comments(){
         return $this->morphMany(comments::class,'commentable');
     }
