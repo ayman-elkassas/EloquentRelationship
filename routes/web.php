@@ -293,6 +293,8 @@ Route::get('role/posts',function (){
     return $posts;
 });
 
+//PolyMorphic Relationship.................
+
 //Create new comment
 Route::get('comment/create',function (){
     $post=\App\Post::find(2);
@@ -342,6 +344,35 @@ Route::get('comment/delete',function (){
 
     return 'Success';
 
+});
+
+Route::get('tags/read',function (){
+    $post=\App\Post::find(1);
+
+    foreach ($post->tags as $tag) {
+        echo $tag->name . '<br>';
+    }
+});
+
+Route::get('tag/attach',function(){
+    $post=\App\Post::find(1);
+    $post->tags()->attach([4,5,6]);
+
+    return 'Success';
+});
+
+Route::get('tag/detach',function(){
+    $post=\App\Post::find(1);
+    $post->tags()->detach([4,5,6]);
+
+    return 'Success';
+});
+
+Route::get('tag/sync',function (){
+    $post=\App\Post::find(1);
+    $post->tags()->sync([4,6]);
+
+    return 'Success';
 });
 
 

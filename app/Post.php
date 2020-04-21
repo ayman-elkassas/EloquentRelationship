@@ -24,4 +24,8 @@ class Post extends Model
     public function comments():object {
         return $this->morphMany(comments::class,'commentable');
     }
+
+    public function tags(){
+        return $this->morphToMany(Tag::class,'taggable');
+    }
 }

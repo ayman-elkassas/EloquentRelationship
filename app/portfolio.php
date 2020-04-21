@@ -17,4 +17,8 @@ class portfolio extends Model
     public function comments(){
         return $this->morphMany(comments::class,'commentable');
     }
+
+    public function tags(){
+        return $this->morphToMany(Tag::class,'taggable');
+    }
 }
